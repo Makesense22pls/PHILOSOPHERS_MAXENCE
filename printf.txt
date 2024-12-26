@@ -1,0 +1,1 @@
+printf("all->number_of_philosophers = [%d]", all->number_of_philosophers);
