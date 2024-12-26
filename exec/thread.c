@@ -3,60 +3,75 @@
 /*                                                        :::      ::::::::   */
 /*   thread.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: maxencefournier <maxencefournier@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/24 06:57:33 by codespace         #+#    #+#             */
-/*   Updated: 2024/12/26 19:42:42 by codespace        ###   ########.fr       */
+/*   Updated: 2024/12/26 18:19:42 by maxencefour      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/philo.h"
 
 
-void	*routine(void *struc)
-{
-	t_input *data = (t_input *)struc;
-	int i = 0;
-	while(i < 10000000)
-	{
-		pthread_mutex_lock(&data->mutex);
-		data->mail++;
-		pthread_mutex_unlock(&data->mutex);
-		i++;
-	}
-	return (0);
+void *routine(void *arg) {
+    t_philo *data = (t_philo *)arg;
+    struct timeval current_time;
+
+    while (1) {
+		int long timeout ;
+        printf("Philosophe n°%d pense\n", data->index);
+        usleep(1000);
+
+        gettimeofday(&current_time, NULL);
+        timeout = (current_time.tv_sec - data->last_meal.tv_sec) * 1000 + 
+                            (current_time.tv_usec - data->last_meal.tv_usec) / 1000;
+        if (timeout > data->table->time_to_die) 
+		{
+            printf("Philosophe n°%d est mort\n", data->index);
+            return(0);
+        }
+
+        pthread_mutex_lock(&data->fork[data->index]);
+        pthread_mutex_lock(&data->fork[(data->index + 1) % data->number_of_philosophers]);
+
+        printf("Philosophe n°%d mange\n", data->index);
+        gettimeofday(&data->last_meal, NULL);
+        usleep(data->table->time_to_eat);
+
+        pthread_mutex_unlock(&data->fork[data->index]);
+        pthread_mutex_unlock(&data->fork[(data->index + 1) % data->number_of_philosophers]);
+
+        printf("Philosophe n°%d dort\n", data->index);
+        usleep(data->table->time_to_sleep);
+    }
+    return (NULL);
 }
 
-
-int		ft_thread(t_input *all)
+int		thread_join(t_philo *all)
 {
+	int i = 0;
 	printf("GOOD\n");
 	int philos = all->number_of_philosophers;
-	int i = 0;
 	int j = 0;
-	pthread_t philo_threads [all->number_of_philosophers];
-	pthread_mutex_init(&all->mutex,NULL);
-	while( i < philos)
-	{
-		if (pthread_create(&philo_threads[i], NULL, routine, all) != 0)
-			return(printf("Failed to create thread\n"), -1);
-		i++;
-		printf("pthread [%d] has started exec\n",i );
-	}
 	while( j < philos)
 	{
-		if (pthread_join(philo_threads[j], NULL)!= 0)
+		if (pthread_join(all->philo_threads[j], NULL)!= 0)
 			return(printf("Failed to join\n"), -1);
 		printf("pthread [%d] has finished exec\n",j );
 		j++;
 	}
-	pthread_mutex_destroy(&all->mutex);
+	while (i < philos)
+	{
+		pthread_mutex_destroy(&all->fork[i]);
+		i++;
+	}
 	printf("Number of Mails %d\n", all->mail);
 	return (0);
 }
 
 
-void dinner_start(t_input *all)
+
+void dinner_start(t_philo *all)
 {
 	if (all->table->number_of_times_each_philosopher_must_eat == 0)
 		return;
@@ -65,7 +80,6 @@ void dinner_start(t_input *all)
 	else
 		{
 			printf("TAMERE\n" );
-			ft_thread(all);
+			thread_join(all);
 		}
-		
 }

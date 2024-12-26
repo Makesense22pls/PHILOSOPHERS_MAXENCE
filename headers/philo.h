@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: maxencefournier <maxencefournier@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 20:55:18 by codespace         #+#    #+#             */
-/*   Updated: 2024/12/26 19:41:59 by codespace        ###   ########.fr       */
+/*   Updated: 2024/12/26 17:31:50 by maxencefour      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,23 +26,28 @@ typedef struct  s_table
     
 }t_table;
 
-typedef struct s_input
+typedef struct s_philo
 {
+    int index;
+    struct timeval last_meal;
+    int num_philo;
+    pthread_t *philo_threads;
     int mail;
-    pthread_mutex_t                 mutex;
+    pthread_mutex_t                 *fork;
     int								argc;
     char                        **input;
     long int number_of_philosophers;
-	long int last_meal;
     long int meals_count;
     long int number_of_times_each_philosopher_must_eat;
     t_table *table;
-}			t_input;
+}			t_philo;
 
 
 
 bool        ft_isdigit_philo(char **str, int argc);
-t_input	    *ft_innit(int argc, char **argv);
+t_philo	    *initialize(int argc, char **argv);
 void	*routine(void *struc);
-int		ft_thread(t_input *all);
-void dinner_start(t_input *all);
+int		thread_join(t_philo *all);
+void dinner_start(t_philo *all);
+void	innit_philo_mutex(t_philo *init, int argc, char **argv);
+void	innit_philo_threads(t_philo *init, int argc, char **argv);
