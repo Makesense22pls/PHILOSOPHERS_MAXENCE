@@ -6,7 +6,7 @@
 /*   By: maxencefournier <maxencefournier@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 20:55:18 by codespace         #+#    #+#             */
-/*   Updated: 2024/12/26 17:31:50 by maxencefour      ###   ########.fr       */
+/*   Updated: 2024/12/27 21:20:17 by maxencefour      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ typedef struct  s_table
 
 typedef struct s_philo
 {
+    int MAX;
+    int TEST;
     int index;
     struct timeval last_meal;
     int num_philo;
@@ -51,3 +53,5 @@ int		thread_join(t_philo *all);
 void dinner_start(t_philo *all);
 void	innit_philo_mutex(t_philo *init, int argc, char **argv);
 void	innit_philo_threads(t_philo *init, int argc, char **argv);
+int		join_and_destroy_mutex(t_philo *all);
+void	set_dinner(t_philo *init, int argc, char **argv);

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: codespace <codespace@student.42.fr>        +#+  +:+       +#+         #
+#    By: maxencefournier <maxencefournier@studen    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/05 17:01:19 by mafourni          #+#    #+#              #
-#    Updated: 2024/12/24 08:11:13 by codespace        ###   ########.fr        #
+#    Updated: 2024/12/27 19:10:15 by maxencefour      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = philo
 
 CFLAGS = -Wall -Werror -Wextra -pthread
 RM = rm -f
-SRC = exec/main.c parsing/check_args.c setup.c exec/thread.c
+SRC = exec/main.c parsing/check_args.c exec/thread.c  exec/innit.c
 OBJ = $(SRC:.c=.o)
 
 #LIB
