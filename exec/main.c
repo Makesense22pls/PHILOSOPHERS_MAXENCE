@@ -6,7 +6,7 @@
 /*   By: maxencefournier <maxencefournier@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 20:50:44 by codespace         #+#    #+#             */
-/*   Updated: 2024/12/27 21:28:54 by maxencefour      ###   ########.fr       */
+/*   Updated: 2025/01/01 17:34:56 by maxencefour      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ int main(int argc, char **argv)
 	all = initialize(argc, argv);
 	if (all->table->number_of_times_each_philosopher_must_eat > 200 || all->table->number_of_times_each_philosopher_must_eat == 0)
 		return (0);
-	printf("Time to die = [%ld]\n",all->table->time_to_eat);
 	set_dinner(all,argc,argv);
 	join_and_destroy_mutex(all);
 }

@@ -6,7 +6,7 @@
 /*   By: maxencefournier <maxencefournier@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 19:08:50 by maxencefour       #+#    #+#             */
-/*   Updated: 2024/12/27 21:28:07 by maxencefour      ###   ########.fr       */
+/*   Updated: 2025/01/01 22:13:11 by maxencefour      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,10 @@ t_philo	*initialize(int argc, char **argv)
 		return (NULL);
 	init->num_philo = 0;
 	init->argc  = argc;
-    init->table->time_to_die =  ft_atoi(argv[2]) * 1000;
-    init->table->time_to_eat = ft_atoi(argv[3]) * 1e3;
-    init->table->time_to_sleep = ft_atoi(argv[4]) * 1e3;
+    init->table->time_to_die =  ft_atoi(argv[2]);
+    init->table->time_to_eat = ft_atoi(argv[3]);
+    init->table->time_to_sleep = ft_atoi(argv[4]);
+	init->table->all_ate_enough = 0;
     if (argc == 6)
 		init->table->number_of_times_each_philosopher_must_eat = ft_atoi(argv[5]);
 	else
@@ -53,7 +54,6 @@ void	set_dinner(t_philo *init, int argc, char **argv)
 				return;
 			}
 			init->num_philo++;
-			printf("Philo n°[%d] has started exec\n",init->num_philo);
 		}
 }
 
