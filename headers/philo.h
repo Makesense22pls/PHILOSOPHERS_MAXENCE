@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maxencefournier <maxencefournier@studen    +#+  +:+       +#+        */
+/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 20:55:18 by codespace         #+#    #+#             */
-/*   Updated: 2025/01/01 22:13:54 by maxencefour      ###   ########.fr       */
+/*   Updated: 2025/01/04 14:22:47 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,6 @@ typedef struct  s_table
     int all_ate_enough;
     
 }t_table;
-
-typedef struct s_shared_data {
-    int philosopher_dead;
-    pthread_mutex_t death_mutex;
-} t_shared_data;
 
 typedef struct s_philo
 {

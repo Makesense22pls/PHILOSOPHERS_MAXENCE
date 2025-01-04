@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: maxencefournier <maxencefournier@studen    +#+  +:+       +#+         #
+#    By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/05 17:01:19 by mafourni          #+#    #+#              #
-#    Updated: 2024/12/27 19:10:15 by maxencefour      ###   ########.fr        #
+#    Updated: 2025/01/04 14:25:57 by mafourni         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 

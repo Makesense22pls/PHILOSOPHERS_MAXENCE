@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   innit.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maxencefournier <maxencefournier@studen    +#+  +:+       +#+        */
+/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 19:08:50 by maxencefour       #+#    #+#             */
-/*   Updated: 2025/01/01 22:13:11 by maxencefour      ###   ########.fr       */
+/*   Updated: 2025/01/04 14:50:33 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,9 @@ t_philo	*initialize(int argc, char **argv)
     init->table->time_to_die =  ft_atoi(argv[2]);
     init->table->time_to_eat = ft_atoi(argv[3]);
     init->table->time_to_sleep = ft_atoi(argv[4]);
+	init->table->someone_died = 0;
 	init->table->all_ate_enough = 0;
+	pthread_mutex_init(&init->table->death_mutex, NULL);
     if (argc == 6)
 		init->table->number_of_times_each_philosopher_must_eat = ft_atoi(argv[5]);
 	else
@@ -66,7 +68,7 @@ void	innit_philo_mutex(t_philo *init, int argc, char **argv)
 	if (!init->fork)
 		return;
 	while(i < init->number_of_philosophers)
-		{	
+		{
 			if (pthread_mutex_init(&init->fork[i], NULL) != 0)
             {
 				printf("Failed to initialize mutex\n");
@@ -74,4 +76,5 @@ void	innit_philo_mutex(t_philo *init, int argc, char **argv)
 			}
 			i++;
 		}
+	
 }
