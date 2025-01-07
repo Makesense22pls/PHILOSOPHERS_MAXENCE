@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_args.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maxencefournier <maxencefournier@studen    +#+  +:+       +#+        */
+/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 21:33:39 by codespace         #+#    #+#             */
-/*   Updated: 2024/12/27 18:24:19 by maxencefour      ###   ########.fr       */
+/*   Updated: 2025/01/07 18:23:31 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,20 @@ bool	ft_isdigit_philo(char **str,int argc)
 			else
 				return (false);
 		}
+	}
+	return (true);
+}
+
+bool parser(int argc, char **str)
+{
+	if (argc != 6 && argc != 5)
+		return (printf("Wrong numbers of args\n"), false);
+	if (ft_isdigit_philo(str,argc) == false)
+		return(printf("Only positive numbers accepted"), false);
+	if (str[5] != NULL)
+	{
+		if (ft_atoi(str[5]) > 200 || ft_atoi(str[5]) == 0)
+			return (printf("Unaceptable numbers in [number_of_times_each_philosopher_must_eat]\n"), false);
 	}
 	return (true);
 }

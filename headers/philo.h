@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 20:55:18 by codespace         #+#    #+#             */
-/*   Updated: 2025/01/04 14:22:47 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/01/07 18:32:11 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,16 +48,17 @@ typedef struct s_philo
 }			t_philo;
 
 
-
+bool parser(int argc, char **str);
 bool        ft_isdigit_philo(char **str, int argc);
 t_philo	    *initialize(int argc, char **argv);
 void	*routine(void *struc);
 int		thread_join(t_philo *all);
-void dinner_start(t_philo *all);
 void	innit_philo_mutex(t_philo *init, int argc, char **argv);
 void	innit_philo_threads(t_philo *init, int argc, char **argv);
 int		join_and_destroy_mutex(t_philo *all);
-void	set_dinner(t_philo *init, int argc, char **argv);
+void	set_table(t_philo *init, int argc, char **argv);
 int check_if_only_one_philo(t_philo *all);
 long elapsed_time(struct timeval start_time) ;
 int elapsed_time_meal(t_philo *data) ;
+
+void ft_free(t_philo *all);

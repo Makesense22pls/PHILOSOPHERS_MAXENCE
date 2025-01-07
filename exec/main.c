@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maxencefournier <maxencefournier@studen    +#+  +:+       +#+        */
+/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 20:50:44 by codespace         #+#    #+#             */
-/*   Updated: 2025/01/01 17:34:56 by maxencefour      ###   ########.fr       */
+/*   Updated: 2025/01/07 18:36:56 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,15 @@
 int main(int argc, char **argv)
 {
 	t_philo *all;
-	int i;
-	(void) i;
-	if (argc != 6 && argc != 5)
-		return (printf("Wrong numbers of args\n"), 0);
-	if (ft_isdigit_philo(argv,argc) == 0)
-		return(printf("Only positive numbers accepted"), 0);
-	all = initialize(argc, argv);
-	if (all->table->number_of_times_each_philosopher_must_eat > 200 || all->table->number_of_times_each_philosopher_must_eat == 0)
+	// int i;
+	// i = 0;
+	if (parser(argc, argv) == 0)
 		return (0);
-	set_dinner(all,argc,argv);
+	all = initialize(argc, argv);
+	set_table(all,argc,argv);
 	join_and_destroy_mutex(all);
+	//printf("---- OE :LA TEAM ----\n");
+	ft_free(all);
 }
 
 int		join_and_destroy_mutex(t_philo *all)

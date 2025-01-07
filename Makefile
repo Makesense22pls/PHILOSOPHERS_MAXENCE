@@ -6,7 +6,7 @@
 #    By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/05 17:01:19 by mafourni          #+#    #+#              #
-#    Updated: 2025/01/04 14:25:57 by mafourni         ###   ########.fr        #
+#    Updated: 2025/01/07 18:32:51 by mafourni         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = philo
 
 CFLAGS = -Wall -Werror -Wextra -pthread
 RM = rm -f
-SRC = exec/main.c parsing/check_args.c exec/thread.c  exec/innit.c
+SRC = exec/main.c parsing/check_args.c exec/thread.c  exec/innit.c exec/time_check.c exec/delocate_mem/freeingthis.c
 OBJ = $(SRC:.c=.o)
 
 #LIB

@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 19:08:50 by maxencefour       #+#    #+#             */
-/*   Updated: 2025/01/04 14:50:33 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/01/07 17:56:56 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,28 +36,6 @@ t_philo	*initialize(int argc, char **argv)
 	return (init);
 }
 
-void	set_dinner(t_philo *init, int argc, char **argv)
-{
-	(void) argc;
-	init->number_of_philosophers = ft_atoi(argv[1]);
-	init->philo_threads = malloc(sizeof(pthread_t) * init->number_of_philosophers);
-	if (!init->philo_threads)
-		return;
-	innit_philo_mutex(init,argc, argv);
-	gettimeofday(&init->last_meal, NULL);
-	while(init->num_philo < init->number_of_philosophers)
-		{
-			t_philo *philo = malloc(sizeof(t_philo));
-        	*philo = *init;
-       		philo->index = init->num_philo;
-			if(pthread_create(&init->philo_threads[init->num_philo], NULL, (void *)routine, (void *)philo) != 0)
-			{
-				printf("Failed to create a philo\n");
-				return;
-			}
-			init->num_philo++;
-		}
-}
 
 void	innit_philo_mutex(t_philo *init, int argc, char **argv)
 {

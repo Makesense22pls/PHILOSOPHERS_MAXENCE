@@ -1,0 +1,19 @@
+[0 ms] Philosophe n°1 has taken a fork
+[0 ms] Philosophe n°1 has taken a fork
+[0 ms] Philosophe n°1 is eating, Compteur de manger = [0]
+[0 ms] Philosophe n°2 has taken a fork
+[200 ms] Philosophe n°1 is sleeping
+[200 ms] Philosophe n°4 has taken a fork
+[200 ms] Philosophe n°2 has taken a fork
+[200 ms] Philosophe n°2 is eating, Compteur de manger = [0]
+[200 ms] Philosophe n°4 has taken a fork
+[200 ms] Philosophe n°4 is eating, Compteur de manger = [0]
+[300 ms] Philosophe n°1 is thinking
+[400 ms] Philosophe n°4 is sleeping
+[400 ms] Philosophe n°2 is sleeping
+[400 ms] Philosophe n°1 has taken a fork
+[400 ms] Philosophe n°1 has taken a fork
+[400 ms] Philosophe n°1 is eating, Compteur de manger = [1]
+[400 ms] Philosophe n°3 has taken a fork
+[400 ms] Philosophe n°3 has taken a fork
+[400 ms] Philosophe n°3 est mort
