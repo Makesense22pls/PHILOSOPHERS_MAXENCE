@@ -6,36 +6,24 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 17:51:43 by mafourni          #+#    #+#             */
-/*   Updated: 2025/01/07 17:52:17 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/01/22 17:58:20 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/philo.h"
 
-long elapsed_time(struct timeval start_time) 
+long elapsed_time(t_philo *philo) 
 {
-    struct timeval current_time;
-    gettimeofday(&current_time, NULL);
-    return ((current_time.tv_sec - start_time.tv_sec) * 1000 + 
-            (current_time.tv_usec - start_time.tv_usec) / 1000);
+    long	time;
+
+	time = get_time() - philo->table->start_time;
+	return (time);
 }
 
-int elapsed_time_meal(t_philo *data) 
+long	get_time(void)
 {
-    struct timeval current_time;
-    gettimeofday(&current_time, NULL);
-    return ((current_time.tv_sec - data->last_meal.tv_sec) * 1000 + 
-            (current_time.tv_usec - data->last_meal.tv_usec) / 1000);
-}
+	struct timeval	tv;
 
-int check_if_only_one_philo(t_philo *all)
-{
-    if (all->number_of_philosophers == 1)
-    {
-        printf("Philosophe n°1 is thinking\n");
-        usleep(all->table->time_to_die);
-        printf("Philosophe n°1 is dead\n");
-        return (1);
-    }
-    return (0);
+	gettimeofday(&tv, NULL);
+	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
 }

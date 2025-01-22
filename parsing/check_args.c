@@ -6,12 +6,25 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 21:33:39 by codespace         #+#    #+#             */
-/*   Updated: 2025/01/07 18:23:31 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/01/10 14:24:42 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/philo.h"
 
+bool parser(int argc, char **str)
+{
+	if (argc != 6 && argc != 5)
+		return (printf("Wrong numbers of args\n"), false);
+	if (ft_isdigit_philo(str,argc) == false)
+		return(printf("Only positive numbers accepted"), false);
+	if (str[5] != NULL)
+	{
+		if (ft_atoi(str[5]) > 200 || ft_atoi(str[5]) == 0)
+			return (printf("Unaceptable numbers in [number_of_times_each_philosopher_must_eat]\n"), false);
+	}
+	return (true);
+}
 bool	ft_isdigit_philo(char **str,int argc)
 {
 	while(argc > 1)
@@ -28,17 +41,14 @@ bool	ft_isdigit_philo(char **str,int argc)
 	}
 	return (true);
 }
-
-bool parser(int argc, char **str)
+int check_if_only_one_philo(t_philo *all)
 {
-	if (argc != 6 && argc != 5)
-		return (printf("Wrong numbers of args\n"), false);
-	if (ft_isdigit_philo(str,argc) == false)
-		return(printf("Only positive numbers accepted"), false);
-	if (str[5] != NULL)
-	{
-		if (ft_atoi(str[5]) > 200 || ft_atoi(str[5]) == 0)
-			return (printf("Unaceptable numbers in [number_of_times_each_philosopher_must_eat]\n"), false);
-	}
-	return (true);
+    if (all->number_of_philosophers == 1)
+    {
+        printf("Philosophe n°1 is thinking\n");
+        usleep(all->table->time_to_die);
+        printf("Philosophe n°1 is dead\n");
+        return (1);
+    }
+    return (0);
 }

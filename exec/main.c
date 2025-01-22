@@ -6,25 +6,29 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 20:50:44 by codespace         #+#    #+#             */
-/*   Updated: 2025/01/07 18:36:56 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/01/22 19:06:28 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/philo.h"
 
+
 int main(int argc, char **argv)
 {
-	t_philo *all;
-	// int i;
-	// i = 0;
+	t_philo *philo;
+	t_table *all;
 	if (parser(argc, argv) == 0)
 		return (0);
 	all = initialize(argc, argv);
-	set_table(all,argc,argv);
+	philo = set_table(all,argc,argv);
+	if (philo == NULL)
+		return (printf("Failed to create philo\n"), -1);
+	monitor(philo);
 	join_and_destroy_mutex(all);
-	//printf("---- OE :LA TEAM ----\n");
 	ft_free(all);
+	return (0);
 }
+
 
 int		join_and_destroy_mutex(t_philo *all)
 {
