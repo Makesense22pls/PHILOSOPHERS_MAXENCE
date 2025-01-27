@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 20:55:18 by codespace         #+#    #+#             */
-/*   Updated: 2025/01/22 18:15:11 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/01/23 19:12:42 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 
 typedef struct  s_table
 {
-	
+	int                is_dead;
 	long int											num_philo;
     int													time_to_die;
     int													time_to_eat;
@@ -28,6 +28,7 @@ typedef struct  s_table
 	long												start_time;
     long int											number_of_times_each_philosopher_must_eat;
 	pthread_mutex_t										*forks;
+    pthread_mutex_t     death_lock;
     pthread_mutex_t										meal_lock;
     long int 											someone_died;
     long int											all_ate_enough;

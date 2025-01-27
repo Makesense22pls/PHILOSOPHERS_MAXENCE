@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 19:08:50 by maxencefour       #+#    #+#             */
-/*   Updated: 2025/01/22 18:15:43 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/01/23 19:13:38 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,18 @@ t_table	*initialize(int argc, char **argv)
 	info = malloc(sizeof(t_table));
 	if (!info)
 		return (NULL);
+	info->is_dead = 0;
 	info->num_philo = ft_atoi(argv[1]);
     info->time_to_die =  ft_atoi(argv[2]);
     info->time_to_eat = ft_atoi(argv[3]);
     info->time_to_sleep = ft_atoi(argv[4]);
 	info->start_time = get_time();
+	pthread_mutex_init(&info->death_lock, NULL);
+	if (pthread_mutex_init(&info->meal_lock, NULL) != 0)
+	{
+  	 	printf("Failed to initialize meal_lock mutex\n");
+    	return NULL;
+	}	
 	// printf("start_time oe oe  = %ld\n", info->start_time);
 	info->someone_died = 0;
 	info->all_ate_enough = 0;

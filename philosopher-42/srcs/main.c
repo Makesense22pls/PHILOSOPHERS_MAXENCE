@@ -3,28 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/22 20:50:44 by codespace         #+#    #+#             */
-/*   Updated: 2025/01/27 19:43:23 by mafourni         ###   ########.fr       */
+/*   Created: 2025/01/20 14:57:35 by eel-abed          #+#    #+#             */
+/*   Updated: 2025/01/20 14:58:58 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../headers/philo.h"
+#include "../includes/philo.h"
 
-
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
-	t_philo *philo;
-	t_table *all;
-	if (parser(argc, argv) == 0)
-		return (0);
-	all = initialize(argc, argv);
-	philo = set_table(all,argc,argv);
-	if (philo == NULL)
-		return (printf("Failed to create philo\n"), -1);
-	monitor(philo);
-	// join_and_destroy_mutex(all);
-	// ft_free(all);
+	t_data	data;
+	t_philo	*philos;
+
+	if (argc < 5 || argc > 6)
+		return (printf("Usage: ./philo [args]\n"), 1);
+	if (init_data(&data, argc, argv))
+		return (1);
+	philos = init_philos(&data);
+	if (!philos)
+		return (1);
+	monitor(philos); // Lancer la surveillance
 	return (0);
 }
