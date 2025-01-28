@@ -6,7 +6,7 @@
 #    By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/05 17:01:19 by mafourni          #+#    #+#              #
-#    Updated: 2025/01/07 18:32:51 by mafourni         ###   ########.fr        #
+#    Updated: 2025/01/28 23:22:45 by mafourni         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,35 +14,25 @@ NAME = philo
 
 CFLAGS = -Wall -Werror -Wextra -pthread
 RM = rm -f
-SRC = exec/main.c parsing/check_args.c exec/thread.c  exec/innit.c exec/time_check.c exec/delocate_mem/freeingthis.c
+SRC = exec/main.c parsing/parsing.c exec/set_table.c exec/monitor.c exec/init_philo_mutex.c exec/routine.c exec/time_check.c
 OBJ = $(SRC:.c=.o)
 
-#LIB
-LIBFT_DIR = headers/libft
-LIBFT_LIB = $(LIBFT_DIR)/libft.a
-
-
 #HEADERS
-HEADERS_LIB = $(LIBFT_DIR)
 
-all : $(LIBFT_LIB) $(NAME)
+all : $(NAME)
 
-$(LIBFT_LIB):
-	@make -C $(LIBFT_DIR)
 
 %.o: %.c
-	gcc $(CFLAGS) -I. -I$(HEADERS_LIB) -c $< -o $@ 
+	gcc $(CFLAGS) -I. -c $< -o $@ 
 
 $(NAME): $(OBJ)
-	 	gcc  $(CFLAGS) $(OBJ) -I. -I$(HEADERS_LIB) -lft -L$(LIBFT_DIR) -o $@
+	 	gcc  $(CFLAGS) $(OBJ) -I. -o $@
 
 
 clean:
 	$(RM) $(OBJ)
-	@make clean -C $(LIBFT_DIR)
 
 fclean: clean
 	$(RM) $(NAME)
-	@make -C $(LIBFT_DIR) fclean 
 
 re: fclean all

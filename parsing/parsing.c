@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_args.c                                       :+:      :+:    :+:   */
+/*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 21:33:39 by codespace         #+#    #+#             */
-/*   Updated: 2025/01/10 14:24:42 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/01/28 23:16:57 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ bool parser(int argc, char **str)
 	if (str[5] != NULL)
 	{
 		if (ft_atoi(str[5]) > 200 || ft_atoi(str[5]) == 0)
-			return (printf("Unaceptable numbers in [number_of_times_each_philosopher_must_eat]\n"), false);
+			return (printf("Unaceptable numbers in [must_eat_nb]\n"), false);
 	}
 	return (true);
 }
@@ -41,14 +41,38 @@ bool	ft_isdigit_philo(char **str,int argc)
 	}
 	return (true);
 }
-int check_if_only_one_philo(t_philo *all)
+long long int	ft_atoi(char *str)
 {
-    if (all->number_of_philosophers == 1)
-    {
-        printf("Philosophe n°1 is thinking\n");
-        usleep(all->table->time_to_die);
-        printf("Philosophe n°1 is dead\n");
-        return (1);
-    }
-    return (0);
+	long long int	result;
+	long long int	comptesign;
+
+	result = 0;
+	comptesign = 1;
+	if (!str)
+		return (0);
+	while ((str[0] >= 9 && str[0] <= 13) || str[0] == 32)
+		str++;
+	if (str[0] == '-' || str[0] == '+')
+	{
+		if (str[0] == '-')
+			comptesign = -1;
+		str++;
+	}
+	while (str[0] >= '0' && str[0] <= '9')
+	{
+		result = result * 10 + (str[0] - '0');
+		str ++;
+	}
+	return (result * comptesign);
 }
+// int check_if_only_one_philo(t_philo *all)
+// {
+//     if (all->number_of_philosophers == 1)
+//     {
+//         printf("Philosophe n°1 is thinking\n");
+//         usleep(all->table->time_to_die);
+//         printf("Philosophe n°1 is dead\n");
+//         return (1);
+//     }
+//     return (0);
+// }

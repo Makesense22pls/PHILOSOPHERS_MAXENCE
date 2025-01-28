@@ -5,39 +5,39 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/20 14:58:10 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/01/27 20:27:47 by mafourni         ###   ########.fr       */
+/*   Created: 2025/01/28 16:55:14 by mafourni          #+#    #+#             */
+/*   Updated: 2025/01/28 23:20:51 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/philo.h"
+#include "../headers/philo.h"
 
 void	*monitor(void *arg)
 {
 	t_philo	*philos;
 	int		i;
-	int		all_full;
+	int		bellies_full;
 
 	philos = (t_philo *)arg;
 	while (1)
 	{
-		i = -1;
-		all_full = 1;
-		while (++i < philos->data->num_philos)
+		i = 0;
+		bellies_full = 1;
+		while (i < philos->table->num_philo)
 		{
-			pthread_mutex_lock(&philos->data->meal_lock);
-			if (philos->poto_plein == 0 && get_time() - philos[i].last_meal > philos->data->time_to_die)
+			pthread_mutex_lock(&philos->table->meal_lock);
+			if (philos->belly_full == 0 && get_time() - philos[i].last_meal > philos->table->time_to_die)
 			{
-				print_status(&philos[i], "died");
-				exit(0); // À adapter avec une variable de contrôle
+				print(&philos[i], "died");
+				exit(1);
 			}
-			if (philos->data->max_meals > 0 && 
-				philos[i].meals_eaten < philos->data->max_meals)
-				all_full = 0;
-			pthread_mutex_unlock(&philos->data->meal_lock);
+			if (philos->table->must_eat_nb > 0 && philos[i].nb_meal_eat < philos->table->must_eat_nb)
+				bellies_full = 0;
+			pthread_mutex_unlock(&philos->table->meal_lock);
+			i++;
 		}
-		if (all_full && philos->data->max_meals > 0)
-			exit(0); // À adapter
+		if (bellies_full && philos->table->must_eat_nb > 0)
+				exit(0);
 		usleep(1000);
 	}
 	return (NULL);

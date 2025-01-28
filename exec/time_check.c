@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 17:51:43 by mafourni          #+#    #+#             */
-/*   Updated: 2025/01/22 17:58:20 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/01/28 23:22:25 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,4 +26,13 @@ long	get_time(void)
 
 	gettimeofday(&tv, NULL);
 	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
+}
+
+void	ft_usleep(long milliseconds)
+{
+	long	start;
+
+	start = get_time();
+	while (get_time() - start < milliseconds)
+		usleep(100);
 }
