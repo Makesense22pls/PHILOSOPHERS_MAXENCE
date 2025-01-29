@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 20:55:18 by codespace         #+#    #+#             */
-/*   Updated: 2025/01/28 23:16:29 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/01/30 00:57:16 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,14 @@ typedef struct  s_table
 	pthread_mutex_t										*forks;
     pthread_mutex_t										print_lock;
     pthread_mutex_t										meal_lock;
+    pthread_mutex_t                                     dead_lock;
 	int													num_philo;
     int													time_to_die;
     int													time_to_eat;
     int													time_to_sleep;
     int													must_eat_nb;
 	long												start_time;
+    int                                                 dead;
 }t_table;
 
 typedef struct s_philo
@@ -56,6 +58,7 @@ t_philo	*set_table(t_table *info);
 //ROUTINE
 void	*routine(void *struc);
 void	routine_without_max(t_philo *philo);
+// int routine_without_max(t_philo *philo);
 void	routine_with_max(t_philo *philo);
 
 void	eat(t_philo *philo);

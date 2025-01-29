@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 16:48:57 by mafourni          #+#    #+#             */
-/*   Updated: 2025/01/28 23:20:40 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/01/30 00:54:59 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,36 @@ void	*routine(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
-	while (1)
+	// if (philo->table->num_philo == 1)
+    // {
+    //     print(philo, "has taken a fork");
+    //     ft_usleep(philo->table->time_to_die);
+    //     return (NULL);
+    // }
+	while (!philo->table->dead)
 	{
 		if (philo->table->must_eat_nb <= 0)
-			routine_without_max(philo);
+		{
+			if (!philo->table->dead)
+			{
+				printf("OE\n");
+				take_forks(philo);
+				if(philo->table->dead)
+				{
+					release_forks(philo);
+					break;
+				}
+				eat(philo);
+				release_forks(philo);
+				if(philo->table->dead)
+					break;
+				print(philo, "is sleeping");
+				ft_usleep(philo->table->time_to_sleep);
+				print(philo, "is thinking");
+
+			}
+		// routine_without_max(philo);
+		}
 		else
 			if (philo->nb_meal_eat < philo->table->must_eat_nb)
 			{
@@ -41,20 +67,24 @@ void	*routine(void *arg)
 
 void	routine_without_max(t_philo *philo)
 {
+	if (!philo->table->dead)
+	{
 		take_forks(philo);
 		eat(philo);
 		release_forks(philo);
 		print(philo, "is sleeping");
 		ft_usleep(philo->table->time_to_sleep);
 		print(philo, "is thinking");
+	}
 }
+
 
 void	eat(t_philo *philo)
 {
 	print(philo, "is eating");
 	pthread_mutex_lock(&philo->table->meal_lock);
 	philo->last_meal = get_time();
-	philo->nb_meal_eat ++;
+	philo->nb_meal_eat++;
 	printf("Philo %d a mangé %d fois\n", philo->index, philo->nb_meal_eat);
 	pthread_mutex_unlock(&philo->table->meal_lock);
 	ft_usleep(philo->table->time_to_eat);
@@ -62,6 +92,7 @@ void	eat(t_philo *philo)
 
 void	take_forks(t_philo *philo)
 {
+
 	int	left_fork;
 	int	right_fork;
 
@@ -77,6 +108,11 @@ void	take_forks(t_philo *philo)
 	{
 		pthread_mutex_lock(&philo->table->forks[left_fork]);
 		pthread_mutex_lock(&philo->table->forks[right_fork]);
+	}
+	if(philo->table->dead)
+	{
+		release_forks(philo);
+		return;
 	}
 	print(philo, "has taken a fork");
 	print(philo, "has taken a fork");
