@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 21:33:39 by codespace         #+#    #+#             */
-/*   Updated: 2025/01/30 22:36:59 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/01/31 00:20:29 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,15 @@
 
 bool	parser(int argc, char **str)
 {
+	
 	if (argc != 6 && argc != 5)
 		return (printf("Wrong numbers of args\n"), false);
 	if (ft_isdigit_philo(str, argc) == false)
 		return (printf("Only positive numbers accepted"), false);
+	if ((ft_atoi(str[2]) > 2147483647) || (ft_atoi(str[3]) > 2147483647) || (ft_atoi(str[1]) > 2147483647) || (ft_atoi(str[4]) > 2147483647))
+		return (printf("Wrong arguments\n"), false);
+	if (ft_atoi(str[2]) == 0)
+		return (printf("Unaceptable numbers in [time_to_die]\n"), false);
 	if (str[5] != NULL)
 	{
 		if (ft_atoi(str[5]) > 200 || ft_atoi(str[5]) == 0)
