@@ -6,7 +6,7 @@
 #    By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/05 17:01:19 by mafourni          #+#    #+#              #
-#    Updated: 2025/01/29 22:56:48 by mafourni         ###   ########.fr        #
+#    Updated: 2025/01/30 22:26:27 by mafourni         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,10 +14,9 @@ NAME = philo
 
 CFLAGS = -Wall -Werror -Wextra -pthread
 RM = rm -f
-SRC = exec/main.c parsing/parsing.c exec/set_table.c exec/monitor.c exec/init_philo_mutex.c exec/utils.c exec/routine.c exec/time_check.c
+SRC = exec/main.c parsing/parsing.c exec/utils.c exec/set_table.c exec/monitor.c exec/init_philo_mutex.c exec/routine.c exec/routine_utils.c exec/time_check.c
 OBJ = $(SRC:.c=.o)
 
-#HEADERS
 
 all : $(NAME)
 

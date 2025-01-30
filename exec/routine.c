@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 16:48:57 by mafourni          #+#    #+#             */
-/*   Updated: 2025/01/30 00:54:59 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/01/30 22:30:25 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,236 +17,33 @@ void	*routine(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
-	// if (philo->table->num_philo == 1)
-    // {
-    //     print(philo, "has taken a fork");
-    //     ft_usleep(philo->table->time_to_die);
-    //     return (NULL);
-    // }
 	while (!philo->table->dead)
 	{
 		if (philo->table->must_eat_nb <= 0)
 		{
-			if (!philo->table->dead)
-			{
-				printf("OE\n");
-				take_forks(philo);
-				if(philo->table->dead)
-				{
-					release_forks(philo);
-					break;
-				}
-				eat(philo);
-				release_forks(philo);
-				if(philo->table->dead)
-					break;
-				print(philo, "is sleeping");
-				ft_usleep(philo->table->time_to_sleep);
-				print(philo, "is thinking");
-
-			}
-		// routine_without_max(philo);
+			take_forks(philo);
+			if (philo->table->dead)
+				return (release_forks(philo), NULL);
+			take_eat_release(philo);
+			if (philo->table->dead)
+				break ;
+			sleep_and_think(philo);
 		}
-		else
-			if (philo->nb_meal_eat < philo->table->must_eat_nb)
-			{
-				take_forks(philo);
-				eat(philo);
-				release_forks(philo);
-				if (philo->nb_meal_eat == philo->table->must_eat_nb)
-					philo->belly_full = 1;
-				if (philo->nb_meal_eat  == philo->table->must_eat_nb) 
-					break;
-				print(philo, "is sleeping");
-				ft_usleep(philo->table->time_to_sleep);
-				print(philo, "is thinking");
-			}
+		else if (philo->nb_meal_eat < philo->table->must_eat_nb)
+		{
+			take_eat_release(philo);
+			if (philo->nb_meal_eat == philo->table->must_eat_nb)
+				return (NULL);
+			sleep_and_think(philo);
+		}
 	}
 	return (NULL);
 }
-
-void	routine_without_max(t_philo *philo)
+void	*philo_1_routine(void *arg)
 {
-	if (!philo->table->dead)
-	{
-		take_forks(philo);
-		eat(philo);
-		release_forks(philo);
-		print(philo, "is sleeping");
-		ft_usleep(philo->table->time_to_sleep);
-		print(philo, "is thinking");
-	}
+	t_philo	*philo;
+
+	philo = (t_philo *)arg;
+	ft_usleep(philo->table->time_to_die);
+	return (NULL);
 }
-
-
-void	eat(t_philo *philo)
-{
-	print(philo, "is eating");
-	pthread_mutex_lock(&philo->table->meal_lock);
-	philo->last_meal = get_time();
-	philo->nb_meal_eat++;
-	printf("Philo %d a mangé %d fois\n", philo->index, philo->nb_meal_eat);
-	pthread_mutex_unlock(&philo->table->meal_lock);
-	ft_usleep(philo->table->time_to_eat);
-}
-
-void	take_forks(t_philo *philo)
-{
-
-	int	left_fork;
-	int	right_fork;
-
-	left_fork = philo->index - 1;
-	right_fork = philo->index % philo->table->num_philo;
-
-	if (philo->index % 2 == 0)
-	{
-		pthread_mutex_lock(&philo->table->forks[right_fork]);
-		pthread_mutex_lock(&philo->table->forks[left_fork]);
-	}
-	else
-	{
-		pthread_mutex_lock(&philo->table->forks[left_fork]);
-		pthread_mutex_lock(&philo->table->forks[right_fork]);
-	}
-	if(philo->table->dead)
-	{
-		release_forks(philo);
-		return;
-	}
-	print(philo, "has taken a fork");
-	print(philo, "has taken a fork");
-}
-
-void	release_forks(t_philo *philo)
-{
-	int	left_fork;
-	int	right_fork;
-
-	left_fork = philo->index - 1;
-	right_fork = philo->index % philo->table->num_philo;
-
-	pthread_mutex_unlock(&philo->table->forks[left_fork]);
-	pthread_mutex_unlock(&philo->table->forks[right_fork]);
-}
-
-void	print(t_philo *philo, char *txt)
-{
-	long	timestamp;
-
-	timestamp = get_time() - philo->table->start_time;
-	printf("[%ld ms] Philo n°%d %s\n", timestamp, philo->index, txt);
-}
-
-// void	*routine(void *arg)
-// {
-// 	t_philo	*philo;
-
-// 	philo = (t_philo *)arg;
-// 	while (1)
-// 	{
-// 		if (philo->nb_meal_eat == 0)
-// 		{
-// 			// Prendre les fourchettes
-// 			take_forks(philo);
-
-// 			// Manger
-// 			eat(philo);
-
-// 			// Relâcher les fourchettes
-// 			release_forks(philo);
-// 			// Dormir et penser
-// 			print(philo, "is sleeping");
-// 			ft_usleep(philo->table->time_to_sleep);
-// 			print(philo, "is thinking");
-// 		}
-// 		if (philo->nb_meal_eat < philo->table->must_eat_nb)
-// 		{
-		
-// 			// Prendre les fourchettes
-// 			take_forks(philo);
-
-// 			// Manger
-// 			eat(philo);
-
-// 			// Relâcher les fourchettes
-// 			release_forks(philo);
-			// if(philo->nb_meal_eat == philo->table->must_eat_nb)
-			// {
-			// 	philo->belly_full = 1;
-			// 	printf("Alors Poto plein = %d\n", philo->belly_full);
-			// }
-			// if (philo->nb_meal_eat  == philo->table->must_eat_nb && philo->table->must_eat_nb > 0) 
-			// {
-			// 	printf("Philon* %d Je break\n", philo->index + 1);	
-			// 	break;
-			// }
-// 			// Dormir et penser
-// 			print(philo, "is sleeping");
-// 			ft_usleep(philo->table->time_to_sleep);
-// 			print(philo, "is thinking");
-// 		}
-// 		// if (philo->nb_meal_eat  == philo->table->must_eat_nb && philo->table->must_eat_nb > 0) 
-// 		// {
-// 		// 	printf("Philon* %d Je break\n", philo->index);	
-// 		// 	break;
-// 		// }
-// 	}
-// 	return (NULL);
-// }
-// void	*routine(void *arg)
-// {
-// 	t_philo	*philo;
-
-// 	philo = (t_philo *)arg;
-// 	while (1)
-// 	{
-// 		if (philo->nb_meal_eat == 0)
-// 		{
-// 			// Prendre les fourchettes
-// 			take_forks(philo);
-
-// 			// Manger
-// 			eat(philo);
-
-// 			// Relâcher les fourchettes
-// 			release_forks(philo);
-// 			// Dormir et penser
-// 			print(philo, "is sleeping");
-// 			ft_usleep(philo->table->time_to_sleep);
-// 			print(philo, "is thinking");
-// 		}
-// 		if (philo->nb_meal_eat < philo->table->must_eat_nb)
-// 		{
-		
-// 			// Prendre les fourchettes
-// 			take_forks(philo);
-
-// 			// Manger
-// 			eat(philo);
-
-// 			// Relâcher les fourchettes
-// 			release_forks(philo);
-// 			if(philo->nb_meal_eat == philo->table->must_eat_nb)
-// 			{
-// 				philo->belly_full = 1;
-// 				printf("Alors Poto plein = %d\n", philo->belly_full);
-// 			}
-// 			if (philo->nb_meal_eat  == philo->table->must_eat_nb && philo->table->must_eat_nb > 0) 
-// 			{
-// 				printf("Philon* %d Je break\n", philo->index);	
-// 				break;
-// 			}
-// 			// Dormir et penser
-// 			print(philo, "is sleeping");
-// 			ft_usleep(philo->table->time_to_sleep);
-// 			print(philo, "is thinking");
-// 		}
-// 		if (philo->nb_meal_eat  == philo->table->must_eat_nb && philo->table->must_eat_nb > 0) 
-// 		{
-// 			printf("Philon* %d Je break\n", philo->index);	
-// 			break;
-// 		}
-// 	}
-// 	return (NULL);
-// }

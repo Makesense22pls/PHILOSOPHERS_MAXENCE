@@ -1,23 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isdigit.c                                       :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/13 15:50:09 by mafourni          #+#    #+#             */
-/*   Updated: 2024/07/08 15:04:58 by mafourni         ###   ########.fr       */
+/*   Created: 2025/01/30 22:10:14 by mafourni          #+#    #+#             */
+/*   Updated: 2025/01/30 22:37:16 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../headers/philo.h"
 
-int	ft_isdigit(int c)
+void	print(t_philo *philo, char *txt)
 {
-	if ((c >= 48 && c <= 57) || c == 32)
-	{
-		return (1);
-	}
-	else
-		return (0);
+	long	timestamp;
+
+	timestamp = get_time() - philo->table->start_time;
+	printf("[%ld ms] Philo n°%d %s\n", timestamp, philo->index, txt);
 }
