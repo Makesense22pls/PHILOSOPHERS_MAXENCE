@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 19:08:50 by maxencefour       #+#    #+#             */
-/*   Updated: 2025/01/30 22:29:23 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/03 23:51:05 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,11 @@ int	innit_philo_mutex(t_table *table)
 	if (pthread_mutex_init(&table->dead_lock, NULL) != 0)
 	{
 		printf("Failed to initialize dead_lock mutex\n");
+		return (1);
+	}
+	if (pthread_mutex_init(&table->print_lock, NULL) != 0)
+	{
+		printf("Failed to initialize meal_lock mutex\n");
 		return (1);
 	}
 	return (0);

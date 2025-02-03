@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 20:55:18 by codespace         #+#    #+#             */
-/*   Updated: 2025/01/30 22:39:09 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/04 00:14:40 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,3 +79,4 @@ void				print(t_philo *philo, char *txt);
 // NORMINETTE
 void				init_norminette(int i, t_table *info, t_philo *philo);
 void				dead_guy(t_philo *philos, int i);
+void	smart_sleep(long milliseconds, t_philo *philo);	

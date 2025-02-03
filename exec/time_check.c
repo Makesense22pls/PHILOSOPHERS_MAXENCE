@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 17:51:43 by mafourni          #+#    #+#             */
-/*   Updated: 2025/01/30 22:30:35 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/04 00:14:31 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,17 @@ void	ft_usleep(long milliseconds)
 	start = get_time();
 	while (get_time() - start < milliseconds)
 		usleep(100);
+}
+void	smart_sleep(long milliseconds, t_philo *philo)
+{
+	long	start;
+
+	start = get_time();
+	while (get_time() - start < milliseconds)
+	{
+		if(!philo->table->dead)
+			usleep(100);
+		else
+			break;
+	}
 }

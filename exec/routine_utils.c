@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 22:14:35 by mafourni          #+#    #+#             */
-/*   Updated: 2025/01/30 22:30:18 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/04 00:15:25 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	sleep_and_think(t_philo *philo)
 {
 	print(philo, "is sleeping");
-	ft_usleep(philo->table->time_to_sleep);
+	smart_sleep(philo->table->time_to_sleep,philo);
 	print(philo, "is thinking");
 }
 
@@ -26,7 +26,7 @@ void	eat(t_philo *philo)
 	philo->last_meal = get_time();
 	philo->nb_meal_eat++;
 	pthread_mutex_unlock(&philo->table->meal_lock);
-	ft_usleep(philo->table->time_to_eat);
+	smart_sleep(philo->table->time_to_eat,philo);
 }
 
 void	take_forks(t_philo *philo)
