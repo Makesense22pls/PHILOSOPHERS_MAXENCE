@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/24 06:57:33 by codespace         #+#    #+#             */
-/*   Updated: 2025/01/30 22:35:18 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/04 04:03:21 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,19 +26,22 @@ t_philo	*set_table(t_table *info)
 	{
 		init_norminette(i, info, philo);
 		if (info->num_philo == 1)
-			pthread_create(&philo[i].ph_thread, NULL, philo_1_routine, &philo[i]);
+			pthread_create(&philo[i].ph_thread, NULL, philo_1_routine,
+				&philo[i]);
 		if (info->num_philo > 1)
 		{
-			if (pthread_create(&philo[i].ph_thread, NULL, routine, &philo[i]) != 0)
+			if (pthread_create(&philo[i].ph_thread, NULL, routine,
+					&philo[i]) != 0)
 				return (NULL);
 		}
 	}
+	setter(&info->dead_lock, &info->all_ready, 1);
 	pthread_create(&monitor_thread, NULL, monitor, philo);
 	pthread_join(monitor_thread, NULL);
 	return (philo);
 }
 
-void init_norminette(int i, t_table *info, t_philo *philo)
+void	init_norminette(int i, t_table *info, t_philo *philo)
 {
 	philo[i].table = info;
 	philo[i].belly_full = 0;

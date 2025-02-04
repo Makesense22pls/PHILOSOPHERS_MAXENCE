@@ -6,24 +6,11 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 20:50:44 by codespace         #+#    #+#             */
-/*   Updated: 2025/01/30 22:12:11 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/04 03:49:20 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/philo.h"
-
-// void	print_meal_stats(t_philo *philo, t_table *table)
-// {
-// 	int	i;
-
-// 	printf("\n=== Meal Statistics ===\n");
-// 	for (i = 0; i < table->num_philo; i++)
-// 	{
-// 		printf("Philosopher %d ate %d times\n", philo[i].index,
-// 			philo[i].nb_meal_eat);
-// 	}
-// 	printf("=====================\n");
-// }
 
 int	main(int argc, char **argv)
 {
@@ -47,9 +34,24 @@ int	main(int argc, char **argv)
 		pthread_join(philo[i].ph_thread, NULL);
 		i++;
 	}
-	// print_meal_stats(philo, all);
+	free_destroy(all, philo);
+	return (0);
+}
+
+void	free_destroy(t_table *all, t_philo *philo)
+{
+	int	i;
+
+	pthread_mutex_destroy(&all->meal_lock);
+	pthread_mutex_destroy(&all->dead_lock);
+	pthread_mutex_destroy(&all->print_lock);
+	i = 0;
+	while (i < all->num_philo)
+	{
+		pthread_mutex_destroy(&all->forks[i]);
+		i++;
+	}
 	free(all->forks);
 	free(all);
 	free(philo);
-	return (0);
 }

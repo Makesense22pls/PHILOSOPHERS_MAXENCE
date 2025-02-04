@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 22:14:35 by mafourni          #+#    #+#             */
-/*   Updated: 2025/02/04 00:15:25 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/04 05:22:41 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,17 @@
 
 void	sleep_and_think(t_philo *philo)
 {
+	int	i;
+
 	print(philo, "is sleeping");
-	smart_sleep(philo->table->time_to_sleep,philo);
+	smart_sleep(philo->table->time_to_sleep, philo);
 	print(philo, "is thinking");
+	if (philo->table->num_philo % 2 != 0)
+	{
+		i = (((philo->table->time_to_eat) * 2 - 
+		(philo->table->time_to_sleep)) * 0.5);
+		smart_sleep(i, philo);
+	}
 }
 
 void	eat(t_philo *philo)
@@ -26,7 +34,7 @@ void	eat(t_philo *philo)
 	philo->last_meal = get_time();
 	philo->nb_meal_eat++;
 	pthread_mutex_unlock(&philo->table->meal_lock);
-	smart_sleep(philo->table->time_to_eat,philo);
+	smart_sleep(philo->table->time_to_eat, philo);
 }
 
 void	take_forks(t_philo *philo)
@@ -46,11 +54,6 @@ void	take_forks(t_philo *philo)
 		pthread_mutex_lock(&philo->table->forks[left_fork]);
 		pthread_mutex_lock(&philo->table->forks[right_fork]);
 	}
-	if (philo->table->dead)
-	{
-		release_forks(philo);
-		return ;
-	}
 	print(philo, "has taken a fork");
 	print(philo, "has taken a fork");
 }
@@ -68,13 +71,13 @@ void	release_forks(t_philo *philo)
 
 void	take_eat_release(t_philo *philo)
 {
-	if (philo->table->must_eat_nb > 0)
+	if (philo->table->max > 0)
 		take_forks(philo);
 	eat(philo);
 	release_forks(philo);
-	if (philo->table->must_eat_nb > 0)
+	if (philo->table->max > 0)
 	{
-		if (philo->nb_meal_eat == philo->table->must_eat_nb)
+		if (philo->nb_meal_eat == philo->table->max)
 			philo->belly_full = 1;
 	}
 }

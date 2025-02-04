@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 16:55:14 by mafourni          #+#    #+#             */
-/*   Updated: 2025/02/04 00:10:08 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/04 04:08:22 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,27 @@
 
 void	*monitor(void *arg)
 {
-	t_philo	*philos;
+	t_philo	*philo;
 	int		i;
 	int		bellies_full;
 
-	philos = (t_philo *)arg;
-	while (!philos->table->dead)
+	philo = (t_philo *)arg;
+	while (!(getter(&philo->table->dead_lock, &philo->table->dead)))
 	{
 		i = -1;
 		bellies_full = 1;
-		while (++i < philos->table->num_philo && !philos->table->dead)
+		while (++i < philo->table->num_philo
+			&& !(getter(&philo->table->dead_lock, &philo->table->dead)))
 		{
-			pthread_mutex_lock(&philos->table->meal_lock);
-			if (philos->belly_full == 0 && get_time()- philos[i].last_meal > philos->table->time_to_die)
-				return (dead_guy(philos, i), NULL);
-			if (philos->table->must_eat_nb > 0
-				&& philos->nb_meal_eat < philos->table->must_eat_nb)
+			pthread_mutex_lock(&philo->table->meal_lock);
+			if (philo->belly_full == 0 && get_time()
+				- philo[i].last_meal > philo->table->time_to_die)
+				return (dead_guy(philo, i), NULL);
+			if (philo->table->max > 0 && philo->nb_meal_eat < philo->table->max)
 				bellies_full = 0;
-			pthread_mutex_unlock(&philos->table->meal_lock);
+			pthread_mutex_unlock(&philo->table->meal_lock);
 		}
-		if (bellies_full && philos->table->must_eat_nb > 0)
+		if (bellies_full && philo->table->max > 0)
 			return (0);
 		usleep(50);
 	}

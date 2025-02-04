@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 21:33:39 by codespace         #+#    #+#             */
-/*   Updated: 2025/01/31 00:20:29 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/04 04:35:51 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,28 @@
 
 bool	parser(int argc, char **str)
 {
-	
+	int		i;
+	char	*temp;
+
+	i = 0;
 	if (argc != 6 && argc != 5)
 		return (printf("Wrong numbers of args\n"), false);
 	if (ft_isdigit_philo(str, argc) == false)
 		return (printf("Only positive numbers accepted"), false);
-	if ((ft_atoi(str[2]) > 2147483647) || (ft_atoi(str[3]) > 2147483647) || (ft_atoi(str[1]) > 2147483647) || (ft_atoi(str[4]) > 2147483647))
-		return (printf("Wrong arguments\n"), false);
-	if (ft_atoi(str[2]) == 0)
-		return (printf("Unaceptable numbers in [time_to_die]\n"), false);
-	if (str[5] != NULL)
+	if (ft_atoi(str[1]) == 0)
+		return (printf("Unaceptable numbers \n"), false);
+	while (++i < argc)
 	{
-		if (ft_atoi(str[5]) > 200 || ft_atoi(str[5]) == 0)
-			return (printf("Unaceptable numbers in [must_eat_nb]\n"), false);
+		temp = ft_itoa(ft_atoi(str[i]));
+		if (!temp)
+			return (NULL);
+		if (ft_strncmp(temp, str[i]) != 0)
+			return (printf("Overflow issue.s\n"), false);
+		free(temp);
 	}
 	return (true);
 }
+
 bool	ft_isdigit_philo(char **str, int argc)
 {
 	int	i;
@@ -49,6 +55,7 @@ bool	ft_isdigit_philo(char **str, int argc)
 	}
 	return (true);
 }
+
 long long int	ft_atoi(char *str)
 {
 	long long int	result;

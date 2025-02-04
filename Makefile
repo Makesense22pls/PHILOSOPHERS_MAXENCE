@@ -6,7 +6,7 @@
 #    By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/05 17:01:19 by mafourni          #+#    #+#              #
-#    Updated: 2025/02/04 00:24:57 by mafourni         ###   ########.fr        #
+#    Updated: 2025/02/04 04:23:10 by mafourni         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,13 +20,11 @@ OBJ = $(SRC:.c=.o)
 
 all : $(NAME)
 
-
 %.o: %.c
-	cc $(CFLAGS) -I. -c $< -o $@ 
+	cc $(CFLAGS) -c $< -o $@ 
 
 $(NAME): $(OBJ)
-	 	cc  $(CFLAGS) $(OBJ) -I. -o $@
-
+	 	cc  $(CFLAGS) $(OBJ) -o $@
 
 clean:
 	$(RM) $(OBJ)

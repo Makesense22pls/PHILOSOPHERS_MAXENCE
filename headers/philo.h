@@ -6,16 +6,19 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 20:55:18 by codespace         #+#    #+#             */
-/*   Updated: 2025/02/04 00:14:40 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/04 04:21:39 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <pthread.h>
-#include <stdbool.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <sys/time.h>
-#include <unistd.h>
+#ifndef PHILO_H
+# define PHILO_H
+
+# include <pthread.h>
+# include <stdbool.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <sys/time.h>
+# include <unistd.h>
 
 typedef struct s_table
 {
@@ -27,9 +30,10 @@ typedef struct s_table
 	int				time_to_die;
 	int				time_to_eat;
 	int				time_to_sleep;
-	int				must_eat_nb;
+	int				max;
 	long			start_time;
 	int				dead;
+	int				all_ready;
 }					t_table;
 
 typedef struct s_philo
@@ -39,7 +43,6 @@ typedef struct s_philo
 	int				nb_meal_eat;
 	int				index;
 	long			last_meal;
-	int				argc;
 	int				number_of_philosophers;
 	t_table			*table;
 }					t_philo;
@@ -48,6 +51,9 @@ typedef struct s_philo
 long long int		ft_atoi(char *str);
 bool				parser(int argc, char **str);
 bool				ft_isdigit_philo(char **str, int argc);
+char				*ft_itoa(int n);
+int					ft_len(int nb);
+int					ft_strncmp(const char *s1, const char *s2);
 
 // INIT
 t_table				*initialize(int argc, char **argv);
@@ -67,16 +73,26 @@ void				sleep_and_think(t_philo *philo);
 
 // DEATH CHECK
 void				*monitor(void *arg);
+void				dead_guy(t_philo *philos, int i);
 
 // TIME
-long int			elapsed_time(t_philo *philo);
+void				smart_sleep(long milliseconds, t_philo *philo);
 void				ft_usleep(long milliseconds);
+
 long				get_time(void);
 
-//PRINT
+// PRINT
 void				print(t_philo *philo, char *txt);
 
+//FREE
+void				free_destroy(t_table *all, t_philo *philo);
+
 // NORMINETTE
+void				wait_norminette(t_philo *philo);
 void				init_norminette(int i, t_table *info, t_philo *philo);
-void				dead_guy(t_philo *philos, int i);
-void	smart_sleep(long milliseconds, t_philo *philo);	
+
+//get and set
+int					getter(pthread_mutex_t *mtx, int *i);
+void				setter(pthread_mutex_t *mtx, int *i, int new);
+
+#endif
