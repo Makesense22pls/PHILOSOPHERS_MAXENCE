@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 22:14:35 by mafourni          #+#    #+#             */
-/*   Updated: 2025/02/04 05:22:41 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/05 17:21:29 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ void	sleep_and_think(t_philo *philo)
 	print(philo, "is thinking");
 	if (philo->table->num_philo % 2 != 0)
 	{
-		i = (((philo->table->time_to_eat) * 2 - 
-		(philo->table->time_to_sleep)) * 0.5);
+		i = (((philo->table->time_to_eat) * 2 - (philo->table->time_to_sleep))
+				* 0.5);
 		smart_sleep(i, philo);
 	}
 }

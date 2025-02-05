@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 16:55:14 by mafourni          #+#    #+#             */
-/*   Updated: 2025/02/04 04:08:22 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/05 16:49:39 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	*monitor(void *arg)
 		{
 			pthread_mutex_lock(&philo->table->meal_lock);
 			if (philo->belly_full == 0 && get_time()
-				- philo[i].last_meal > philo->table->time_to_die)
+				- philo[i].last_meal >= philo->table->time_to_die)
 				return (dead_guy(philo, i), NULL);
 			if (philo->table->max > 0 && philo->nb_meal_eat < philo->table->max)
 				bellies_full = 0;
